@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sneply - Share Your Moments</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <h1 class="logo">📸 Sneply</h1>
+    <button class="nav-btn" onclick="window.location.href='profile.html'">Profile</button>
+  </nav>
+
+  <section class="feed">
+    <div class="post">
+      <h3>@akshatverma</h3>
+      <p>Welcome to Sneply 🚀 Your photo-sharing app!</p>
+      <img src="https://picsum.photos/400/300" alt="Post Image" />
+      <button onclick="likePost(this)">❤️ Like</button>
+
+      <div class="comments">
+        <input type="text" class="commentInput" placeholder="Write a comment..." />
+        <button onclick="addComment(this)">Comment</button>
+        <div class="commentList"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="upload">
+    <input type="file" id="fileInput" />
+    <button onclick="uploadPost()">Upload Post</button>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
