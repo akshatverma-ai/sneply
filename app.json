@@ -10,21 +10,75 @@
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#0a0a0a"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.sneply.app",
+      "buildNumber": "1.0.0",
+      "infoPlist": {
+        "CFBundleDisplayName": "Sneply",
+        "CFBundleIdentifier": "com.sneply.app",
+        "CFBundleVersion": "1.0.0",
+        "LSRequiresIPhoneOS": true,
+        "UIStatusBarStyle": "UIStatusBarStyleLightContent",
+        "UISupportedInterfaceOrientations": [
+          "UIInterfaceOrientationPortrait"
+        ],
+        "UIRequiredDeviceCapabilities": [
+          "armv7"
+        ],
+        "NSCameraUsageDescription": "This app needs access to camera to record videos",
+        "NSMicrophoneUsageDescription": "This app needs access to microphone for recording videos",
+        "NSPhotoLibraryUsageDescription": "This app needs access to photo library to select videos and images"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#0a0a0a"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.sneply.app",
+      "versionCode": 1,
+      "compileSdkVersion": 34,
+      "targetSdkVersion": 34,
+      "minSdkVersion": 21,
+      "permissions": [
+        "CAMERA",
+        "RECORD_AUDIO",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "INTERNET",
+        "ACCESS_NETWORK_STATE",
+        "ACCESS_WIFI_STATE",
+        "VIBRATE",
+        "WAKE_LOCK"
+      ],
+      "features": [
+        {
+          "name": "android.hardware.camera",
+          "required": true
+        },
+        {
+          "name": "android.hardware.camera.autofocus",
+          "required": false
+        },
+        {
+          "name": "android.hardware.microphone",
+          "required": true
+        }
+      ]
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      [
+        "expo-image-picker"
+      ]
+    ]
   }
 }
