@@ -1,13 +1,29 @@
+
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { useAuth } from '../context/AuthContext';
+import { sendPasswordResetEmail, getAuth } from 'firebase/auth';
+
+type RootStackParamList = {
+  Login: undefined;
+  Signup: undefined;
+  Main: undefined;
+  Settings: undefined;
+};
+
+type NavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
 
 const { width } = Dimensions.get('window');
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [resetEmail, setResetEmail] = useState('');
+  const [showResetModal, setShowResetModal] = useState(false);
   const { signIn, isLoading, error } = useAuth();
+  const navigation = useNavigation<NavigationProp>();
 
   const handleSignIn = async () => {
     if (!email.trim() || !password.trim()) {
@@ -23,8 +39,34 @@ export default function LoginScreen() {
   };
 
   const navigateToSignup = () => {
-    // This would navigate to signup screen
-    console.log('Navigate to signup');
+    navigation.navigate('Signup');
+  };
+
+  const handleForgotPassword = () => {
+    setShowResetModal(true);
+    setResetEmail(email); // Pre-fill with current email
+  };
+
+  const handlePasswordReset = async () => {
+    if (!resetEmail.trim()) {
+      Alert.alert('Error', 'Please enter your email address');
+      return;
+    }
+
+    try {
+      await sendPasswordResetEmail(getAuth(), resetEmail.trim());
+      Alert.alert(
+        'Password Reset Email Sent',
+        'Check your email for instructions to reset your password.',
+        [{ text: 'OK', onPress: () => setShowResetModal(false) }]
+      );
+    } catch (error) {
+      Alert.alert(
+        'Error',
+        'Failed to send password reset email. Please check your email address.',
+        [{ text: 'OK' }]
+      );
+    }
   };
 
   return (
@@ -81,10 +123,51 @@ export default function LoginScreen() {
           </TouchableOpacity>
         </View>
         
-        <TouchableOpacity style={styles.forgotPassword}>
+        <TouchableOpacity style={styles.forgotPassword} onPress={handleForgotPassword}>
           <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
         </TouchableOpacity>
       </View>
+      
+      {/* Forgot Password Modal */}
+      {showResetModal && (
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Reset Password</Text>
+            <Text style={styles.modalSubtitle}>
+              Enter your email address and we'll send you instructions to reset your password.
+            </Text>
+            
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Email address"
+                placeholderTextColor="#666"
+                value={resetEmail}
+                onChangeText={setResetEmail}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+            </View>
+            
+            <View style={styles.modalButtons}>
+              <TouchableOpacity
+                style={[styles.button, styles.cancelButton]}
+                onPress={() => setShowResetModal(false)}
+              >
+                <Text style={styles.buttonText}>Cancel</Text>
+              </TouchableOpacity>
+              
+              <TouchableOpacity
+                style={[styles.button, styles.resetButton]}
+                onPress={handlePasswordReset}
+              >
+                <Text style={styles.buttonText}>Send Reset Email</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      )}
     </View>
   );
 }
@@ -211,5 +294,53 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#666',
     fontWeight: '600',
+  },
+  modalOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: 20,
+    padding: 24,
+    width: width * 0.85,
+    maxWidth: 320,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.2)',
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#ffffff',
+    textAlign: 'center',
+    marginBottom: 12,
+  },
+  modalSubtitle: {
+    fontSize: 14,
+    color: '#999',
+    textAlign: 'center',
+    marginBottom: 24,
+    lineHeight: 20,
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    gap: 12,
+    marginTop: 20,
+  },
+  cancelButton: {
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderColor: 'rgba(255, 255, 255, 0.2)',
+    flex: 1,
+  },
+  resetButton: {
+    backgroundColor: '#ff006e',
+    borderColor: '#ff006e',
+    flex: 1,
   },
 });

@@ -9,6 +9,7 @@ import DeepModeScreen from '../screens/DeepModeScreen';
 import UploadScreen from '../screens/UploadScreen';
 import ChatScreen from '../screens/ChatScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import SettingsScreen from '../screens/SettingsScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -166,6 +167,27 @@ export default function TabNavigator() {
                 { color: focused ? COLORS.warning : COLORS.textSecondary }
               ]}>
                 Profile
+              </Text>
+            </View>
+          ),
+        }}
+      />
+      
+      <Tab.Screen 
+        name="Settings" 
+        component={SettingsScreen}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View style={[styles.iconContainer, focused && styles.iconContainerFocused]}>
+              <View style={[
+                styles.iconDot, 
+                { backgroundColor: focused ? COLORS.error : COLORS.textSecondary }
+              ]} />
+              <Text style={[
+                styles.iconText,
+                { color: focused ? COLORS.error : COLORS.textSecondary }
+              ]}>
+                Settings
               </Text>
             </View>
           ),

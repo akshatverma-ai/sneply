@@ -5,13 +5,14 @@ import { getStorage } from 'firebase/storage';
 
 // Firebase configuration - Replace with your config
 const firebaseConfig = {
-  apiKey: "your-api-key",
-  authDomain: "sneply.firebaseapp.com",
-  projectId: "sneply",
-  storageBucket: "sneply.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "your-app-id"
+  apiKey: "AIzaSyAZVymUHi5Da04fusJNGvwoB9os8gIFEmw",
+  authDomain: "sneply-3eb8f.firebaseapp.com",
+  projectId: "sneply-3eb8f",
+  storageBucket: "sneply-3eb8f.firebasestorage.app",
+  messagingSenderId: "380734187977",
+  appId: "1:380734187977:web:9ca5c95320a7a14d556018"
 };
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

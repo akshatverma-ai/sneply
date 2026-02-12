@@ -10,7 +10,8 @@ import {
   Dimensions,
   Modal
 } from 'react-native';
-import { useAuth } from '../context/AppContext';
+import { useAuth } from '../context/AuthContext';
+import { useApp } from '../context/AppContext';
 import { COLORS } from '../constants';
 
 const { width, height } = Dimensions.get('window');
@@ -186,7 +187,7 @@ export default function ChatScreen() {
       <View style={styles.messageContent}>
         <Text style={[
           styles.userName,
-          item.isCreator && styles.creatorName,
+          item.isCreator && styles.creatorNameHighlight,
         ]}>
           {item.userName} {item.isCreator && '✨'}
         </Text>
@@ -510,7 +511,7 @@ const styles = StyleSheet.create({
     color: COLORS.text,
     marginBottom: 4,
   },
-  creatorName: {
+  creatorNameHighlight: {
     color: COLORS.secondary,
   },
   messageText: {

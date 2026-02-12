@@ -46,15 +46,16 @@
       "targetSdkVersion": 34,
       "minSdkVersion": 21,
       "permissions": [
-        "CAMERA",
-        "RECORD_AUDIO",
-        "READ_EXTERNAL_STORAGE",
-        "WRITE_EXTERNAL_STORAGE",
-        "INTERNET",
-        "ACCESS_NETWORK_STATE",
-        "ACCESS_WIFI_STATE",
-        "VIBRATE",
-        "WAKE_LOCK"
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.INTERNET",
+        "android.permission.ACCESS_NETWORK_STATE",
+        "android.permission.ACCESS_WIFI_STATE",
+        "android.permission.VIBRATE",
+        "android.permission.WAKE_LOCK",
+        "android.permission.RECORD_AUDIO"
       ],
       "features": [
         {
@@ -79,6 +80,11 @@
       [
         "expo-image-picker"
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "ee82baa5-9a33-432a-bcf3-3b1d2f083bde"
+      }
+    }
   }
 }
