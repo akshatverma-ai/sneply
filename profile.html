@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Profile - Sneply</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="profile-page">
+    <h2>Welcome, Akshat 👋</h2>
+    <p>This is your Sneply profile page!</p>
+
+    <div class="profile-pic">
+      <img id="profileImg" src="https://i.imgur.com/8Km9tLL.jpg" alt="Profile" width="120">
+      <input type="file" id="changePic" onchange="updateProfilePic(event)">
+    </div>
+
+    <button id="followBtn" onclick="toggleFollow()">Follow</button>
+    <button onclick="window.location.href='index.html'">Go to Feed</button>
+  </div>
+
+  <script src="login.js"></script>
+</body>
+</html>
