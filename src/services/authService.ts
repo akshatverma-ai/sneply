@@ -5,7 +5,7 @@ import {
   onAuthStateChanged,
   User as FirebaseUser
 } from 'firebase/auth';
-import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, setDoc, getDoc, serverTimestamp, Timestamp } from 'firebase/firestore';
 import { auth, db } from './firebase';
 import { User } from '../types';
 
@@ -29,7 +29,7 @@ export const authService = {
         videos: 0,
         likes: 0,
         achievements: [],
-        createdAt: new Date(),
+        createdAt: serverTimestamp(),
       };
       
       await setDoc(doc(db, 'users', firebaseUser.uid), userData);
@@ -47,8 +47,26 @@ export const authService = {
       
       // Get user data from Firestore
       const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
+      
       if (!userDoc.exists()) {
-        throw new Error('User profile not found');
+        // Create profile if it doesn't exist
+        const userData: User = {
+          id: firebaseUser.uid,
+          email: firebaseUser.email || email,
+          username: email.split('@')[0], // Fallback username from email
+          displayName: firebaseUser.displayName || email.split('@')[0],
+          energyLevel: 0,
+          creatorRank: 'Rising',
+          followers: 0,
+          following: 0,
+          videos: 0,
+          likes: 0,
+          achievements: [],
+          createdAt: new Date(),
+        };
+        
+        await setDoc(doc(db, 'users', firebaseUser.uid), userData);
+        return userData;
       }
       
       return userDoc.data() as User;

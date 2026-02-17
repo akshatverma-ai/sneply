@@ -1,3 +1,5 @@
+import { MoodType } from '../constants';
+
 export interface User {
   id: string;
   email: string;
@@ -12,7 +14,7 @@ export interface User {
   videos: number;
   likes: number;
   achievements: Achievement[];
-  createdAt: Date;
+  createdAt: Date | import('firebase/firestore').Timestamp;
 }
 
 export interface Video {
@@ -30,6 +32,7 @@ export interface Video {
   tags: string[];
   views: number;
   likes: number;
+  likeCount: number;
   comments: number;
   createdAt: Date;
 }

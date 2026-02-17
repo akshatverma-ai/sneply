@@ -3,6 +3,7 @@ import { View, Text, ScrollView, StyleSheet, Dimensions, TouchableOpacity, FlatL
 import { useApp } from '../context/AppContext';
 import MoodSelection from '../components/features/MoodSelection';
 import CreatorEnergyScore from '../components/features/CreatorEnergyScore';
+import LikeButton from '../components/features/LikeButton';
 import TimeControl from '../components/features/TimeControl';
 import { COLORS, MOODS, VIDEO_MODES } from '../constants';
 
@@ -21,6 +22,7 @@ const mixedContent = [
     mood: 'learn',
     views: '12.5K',
     likes: '892',
+    likeCount: 892,
     energyScore: 85,
   },
   {
@@ -34,6 +36,7 @@ const mixedContent = [
     mood: 'learn',
     views: '125K',
     likes: '8.9K',
+    likeCount: 8900,
     energyScore: 92,
   },
   {
@@ -47,6 +50,7 @@ const mixedContent = [
     mood: 'fun',
     views: '45.2K',
     likes: '3.1K',
+    likeCount: 3100,
     energyScore: 78,
   },
   {
@@ -60,6 +64,7 @@ const mixedContent = [
     mood: 'chill',
     views: '67K',
     likes: '4.5K',
+    likeCount: 4500,
     energyScore: 88,
   },
   {
@@ -73,6 +78,7 @@ const mixedContent = [
     mood: 'focus',
     views: '28.7K',
     likes: '2.4K',
+    likeCount: 2400,
     energyScore: 75,
   },
 ];
@@ -161,7 +167,10 @@ export default function HomeScreen() {
           
           <View style={styles.contentStats}>
             <Text style={styles.views}>{item.views} views</Text>
-            <Text style={styles.likes}>❤️ {item.likes}</Text>
+            <LikeButton 
+              videoId={item.id} 
+              initialLikeCount={item.likeCount}
+            />
           </View>
         </View>
       </View>
