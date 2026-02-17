@@ -89,7 +89,7 @@ export default function HomeScreen() {
   const [showTimeWarning, setShowTimeWarning] = useState(false);
   const [showTimeControl, setShowTimeControl] = useState(false);
 
-  const moodConfig = MOODS[currentMood];
+  const moodConfig = MOODS[currentMood as keyof typeof MOODS];
 
   // AI-powered content filtering based on mood and time
   useEffect(() => {

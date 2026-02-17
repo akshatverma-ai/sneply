@@ -60,7 +60,7 @@ export default function DeepModeScreen() {
   const { currentMood } = useApp();
   const [selectedCategory, setSelectedCategory] = useState('all');
   
-  const moodConfig = MOODS[currentMood];
+  const moodConfig = MOODS[currentMood as keyof typeof MOODS];
   
   const categories = [
     { id: 'all', name: 'All', color: COLORS.textSecondary },

@@ -11,9 +11,13 @@ export const likeService = {
   // Like a video
   async likeVideo(userId: string, videoId: string): Promise<void> {
     try {
-      console.log('🔴 Starting like process:', { userId, videoId });
+      console.log('🔴 Starting like process:', { 
+        currentUser: userId, 
+        videoId: videoId 
+      });
       
       // Create like document
+      console.log('📝 Creating like document in Firestore...');
       const likeRef = doc(db, 'likes', `${userId}_${videoId}`);
       const likeData: Like = {
         userId,
@@ -22,19 +26,37 @@ export const likeService = {
       };
       
       await setDoc(likeRef, likeData);
-      console.log('✅ Like document created successfully');
+      console.log('✅ Like document created successfully:', {
+        documentId: `${userId}_${videoId}`,
+        writeSuccess: true
+      });
       
       // Update video like count
+      console.log('📝 Updating video like count...');
       const videoRef = doc(db, 'videos', videoId);
       await updateDoc(videoRef, {
         likeCount: increment(1),
       });
       
-      console.log('✅ Video like count updated successfully');
-      console.log('🟢 Like process completed successfully');
+      console.log('✅ Video like count updated successfully:', {
+        videoId: videoId,
+        writeSuccess: true,
+        operation: 'increment(1)'
+      });
+      
+      console.log('🟢 Like process completed successfully:', {
+        currentUser: userId,
+        videoId: videoId,
+        status: 'completed'
+      });
       
     } catch (error) {
-      console.error('❌ Like process failed:', error);
+      console.error('❌ Like process failed:', {
+        currentUser: userId,
+        videoId: videoId,
+        writeError: error,
+        status: 'failed'
+      });
       throw new Error(`Failed to like video: ${error}`);
     }
   },
@@ -42,24 +64,46 @@ export const likeService = {
   // Unlike a video
   async unlikeVideo(userId: string, videoId: string): Promise<void> {
     try {
-      console.log('🔴 Starting unlike process:', { userId, videoId });
+      console.log('🔴 Starting unlike process:', { 
+        currentUser: userId, 
+        videoId: videoId 
+      });
       
       // Delete like document
+      console.log('📝 Deleting like document from Firestore...');
       const likeRef = doc(db, 'likes', `${userId}_${videoId}`);
       await deleteDoc(likeRef);
-      console.log('✅ Like document deleted successfully');
+      console.log('✅ Like document deleted successfully:', {
+        documentId: `${userId}_${videoId}`,
+        writeSuccess: true
+      });
       
       // Update video like count
+      console.log('📝 Updating video like count...');
       const videoRef = doc(db, 'videos', videoId);
       await updateDoc(videoRef, {
         likeCount: increment(-1),
       });
       
-      console.log('✅ Video like count updated successfully');
-      console.log('🟢 Unlike process completed successfully');
+      console.log('✅ Video like count updated successfully:', {
+        videoId: videoId,
+        writeSuccess: true,
+        operation: 'increment(-1)'
+      });
+      
+      console.log('🟢 Unlike process completed successfully:', {
+        currentUser: userId,
+        videoId: videoId,
+        status: 'completed'
+      });
       
     } catch (error) {
-      console.error('❌ Unlike process failed:', error);
+      console.error('❌ Unlike process failed:', {
+        currentUser: userId,
+        videoId: videoId,
+        writeError: error,
+        status: 'failed'
+      });
       throw new Error(`Failed to unlike video: ${error}`);
     }
   },
